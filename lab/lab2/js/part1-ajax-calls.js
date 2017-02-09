@@ -19,7 +19,11 @@
   This recipe, can be used by underscore's _.filter. It will return only words with
    >=5 characters.
 ===================== */
-var isLengthOfFiveOrMore = function(str) {};
+var isLengthOfFiveOrMore = function(str) {
+  if (str.length >= 5) {return true}
+  else if (str.length < 5) {return false}
+  else {console.log("Quit messing around!");}
+};
 
 console.log("isLengthOfFiveOrMore success:",
   _.isEqual(_.filter(['this', 'is','a', 'test', 'testing'], isLengthOfFiveOrMore), ['testing']));
@@ -30,15 +34,17 @@ console.log("isLengthOfFiveOrMore success:",
   function you write along with underscore's _.each to log the double of every
   number in the provided array.
 ===================== */
-var logDouble = function(num) {};
+var logDouble = function(num) {console.log(num*2) };
 var theArray = [1, 5, 20, 100];
+_.each(theArray, function(i) {logDouble(i)} );
 
 
 /* =====================
   Given this already defined function, define fizzbuzzArray so that, when mapped
   over, it will equal ['fizz', 'buzz', 'fizzbuzz'];
 ===================== */
-var fizzbuzzArray = [];
+var fizzbuzzArray = [3, 5, 15];
+
 var fizzbuzzFunc = function(num) {
   var str = '';
   if (num % 3 === 0) { str = 'fizz'; }
@@ -94,6 +100,22 @@ var phillySolarInstallationDataUrl = "https://raw.githubusercontent.com/CPLN692-
 var phillyCrimeDataUrl = "https://raw.githubusercontent.com/CPLN692-MUSA611/datasets/master/json/philadelphia-crime-snippet.json";
 var phillyBikeCrashesDataUrl = "https://raw.githubusercontent.com/CPLN692-MUSA611/datasets/master/json/philadelphia-bike-crashes-snippet.json";
 
+$.ajax(phillySolarInstallationDataUrl).done(function(theOutcome){
+  var parsedOutcome = JSON.parse(theOutcome)
+  console.log(parsedOutcome);
+  _.each(parsedOutcome, function(element, index){
+    var lat =  element.LAT ;
+    var long =  element.LONG_ ;
+    var power = element.KW ;
+
+    L.circleMarker([lat, long],{
+      radius: Math.log(power) * 5,
+      fillOpacity: 1/Math.log(power),
+      fillColor: '#FF6411',
+      stroke: false
+    }).addTo(map);
+  })
+});
 
 /* =====================
   Data you grab through ajax is just text. You'll need to parse it as javascript
@@ -117,7 +139,7 @@ var phillyBikeCrashesDataUrl = "https://raw.githubusercontent.com/CPLN692-MUSA61
 
 var map = L.map('map', {
   center: [39.9522, -75.1639],
-  zoom: 14
+  zoom: 12
 });
 var Stamen_TonerLite = L.tileLayer('http://stamen-tiles-{s}.a.ssl.fastly.net/toner-lite/{z}/{x}/{y}.{ext}', {
   attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
