@@ -6,6 +6,7 @@ body {
     padding: 0;
     overflow: hidden;
     font-family: helvetica, arial, sans-serif;
+    margin-left: 10px;
 }
 
 .map {
@@ -23,5 +24,73 @@ body {
     top: 0;
     bottom: 0;
     overflow-y: auto;
-    padding: 20px;
+    margin: 20px;
+}
+
+#Header {
+  padding-top: 20px;
+  font-weight: bold;
+  font-kerning: auto;
+  font-family: Helvetica;
+  font-size: 20px;
+}
+
+#title1{
+  display: inline-block;
+}
+
+#ask{
+  margin-top: 10px;
+  font-size: 14px;
+}
+
+
+#select{
+  font-size: 10px;
+  margin-top: 10px;
+  font-size: 14px;
+}
+
+#button{
+  font-size: 15px;
+  margin-left: 140px;
+  font-weight: normal;
+}
+
+#title2{
+  padding-top: 30px;
+  font-size: 14px;
+  font-weight: normal;
+}
+
+
+#title3{
+  padding-top: 30px;
+  font-size: 14px;
+  font-weight: normal;
+}
+
+
+#title4{
+  padding-top: 60px;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+
+
+.schoolName{
+  padding-left: 5px;
+  padding-top: 7px;
+  margin-right: 50px;
+  margin-left: 5px;
+  font-size: 14px;
+}
+
+.box{
+  margin-top: 30px;
+  height: 100px;
+  width: 200px;
+  background-color: #E4E3E2;
+
 }
