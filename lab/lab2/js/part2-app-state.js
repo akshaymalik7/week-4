@@ -30,13 +30,59 @@
          return 1;
        }
        var one = justOne();
+
+
+
+
+
+
+       function fun1() {
+           return this + 2;
+       }
+       function fun2() {
+           return this + 2;
+       }
+
+       var item = [5,4,3,2,1];
+
+       var newitem1 = $.each(item, fun2);
+       var newitem2 = $.map(item, fun1);
+
+       console.log(newitem1); // [5, 4, 3, 2, 1]
+       console.log(newitem2); // [6, 5, 4, 3, 2]
+
 ===================== */
 
 // We set this to HTTP to prevent 'CORS' issues
-var downloadData = $.ajax("http://");
-var parseData = function() {};
-var makeMarkers = function() {};
-var plotMarkers = function() {};
+var downloadData = $.ajax("http://raw.githubusercontent.com/CPLN692-MUSA611/datasets/master/json/philadelphia-solar-installations.json");
+var parseData = function(i) {
+  return JSON.parse(i);
+};
+
+var makeMarkers = function(i) {
+  var lat;
+  var long;
+  var list=[];
+
+  $.map(i, function(element){
+    var lat =  element.LAT ;
+    var long =  element.LONG_ ;
+    list.push([lat, long]);
+  })
+
+  return list;
+};
+
+
+var plotMarkers = function(somelist) {
+  $.map(somelist, function(list){
+    L.circleMarker(list).addTo(map);
+  }
+)};
+
+
+
+
 
 
 /* =====================
@@ -50,6 +96,7 @@ var plotMarkers = function() {};
 
   In real applications, this will typically happen in response to changes to the
   user's input.
+
 ===================== */
 
 var removeMarkers = function() {};
@@ -70,21 +117,28 @@ var map = L.map('map', {
   center: [39.9522, -75.1639],
   zoom: 14
 });
-var Stamen_TonerLite = L.tileLayer('http://stamen-tiles-{s}.a.ssl.fastly.net/toner-lite/{z}/{x}/{y}.{ext}', {
-  attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
-  subdomains: 'abcd',
-  minZoom: 0,
-  maxZoom: 20,
-  ext: 'png'
+var Stamen_Watercolor = L.tileLayer('http://stamen-tiles-{s}.a.ssl.fastly.net/watercolor/{z}/{x}/{y}.{ext}', {
+	attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+	subdomains: 'abcd',
+	minZoom: 1,
+	maxZoom: 16,
+	ext: 'png'
 }).addTo(map);
 
 /* =====================
  CODE EXECUTED HERE!
-===================== */
 
+ downloadData.done(function(data) {
+   var parsed = parseData(data);
+   var markers = makeMarkers(parsed);
+   plotMarkers(markers);
+   removeMarkers(markers);
+ });
+
+===================== */
 downloadData.done(function(data) {
   var parsed = parseData(data);
   var markers = makeMarkers(parsed);
+  //console.log(markers);
   plotMarkers(markers);
-  removeMarkers(markers);
 });
